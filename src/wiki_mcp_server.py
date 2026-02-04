@@ -14,7 +14,7 @@ import logging
 import ast
 import re
 from pathlib import Path
-from typing import Optional, List, Dict, Any, Union
+from typing import Literal, Optional, List, Dict, Any, Union
 from dataclasses import dataclass
 
 import httpx
@@ -40,6 +40,9 @@ class Settings(BaseSettings):
     WIKIJS_USERNAME: Optional[str] = Field(default=None)
     WIKIJS_PASSWORD: Optional[str] = Field(default=None)
     WIKIJS_MCP_DB: str = Field(default="./wikijs_mappings.db")
+    WIKIJS_MCP_HOST: str = Field(default="localhost")
+    WIKIJS_MCP_PORT: int = Field(default=4321)
+    WIKIJS_MCP_TRANSPORT_METHOD: Literal["http", "sse"] = "sse"
     LOG_LEVEL: str = Field(default="INFO")
     LOG_FILE: str = Field(default="wikijs_mcp.log")
     REPOSITORY_ROOT: str = Field(default="./")
@@ -2296,7 +2299,11 @@ def main():
         logger.info("Wiki.js MCP Server started")
 
     # Run the server
-    mcp.run()
+    mcp.run(
+        transport=settings.WIKIJS_MCP_TRANSPORT_METHOD,
+        host=settings.WIKIJS_MCP_HOST,
+        port=settings.WIKIJS_MCP_PORT,
+    )
 
 
 if __name__ == "__main__":

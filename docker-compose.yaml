@@ -10,6 +10,9 @@ services:
       - WIKIJS_USERNAME=${WIKIJS_USERNAME}
       - WIKIJS_PASSWORD=${WIKIJS_PASSWORD}
       - WIKIJS_MCP_DB=${WIKIJS_MCP_DB:-./wikijs_mappings.db}
+      - WIKIJS_MCP_HOST=${WIKIJS_MCP_HOST:-localhost}
+      - WIKIJS_MCP_PORT=${WIKIJS_MCP_PORT:-5431}
+      - WIKIJS_MCP_TRANSPORT_METHOD=${WIKIJS_MCP_TRANSPORT_METHO:-sse} # possible values: sse(deprecated), http
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
       - LOG_FILE=${LOG_FILE:-wikijs_mcp.log}
       - REPOSITORY_ROOT=${REPOSITORY_ROOT:-./}
